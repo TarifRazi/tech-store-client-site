@@ -6,7 +6,7 @@ const UpdateProduct = () => {
 
     const updateProduct = useLoaderData()
 
-    const { Price, _id, Image, Name,Short_description, Brand_Name, Type, Rating } = updateProduct;
+    const { Price, _id, Image, Name, Short_description, Brand_Name, Type, Rating } = updateProduct;
 
     const handleUpdateProduct = event => {
         event.preventDefault();
@@ -21,11 +21,11 @@ const UpdateProduct = () => {
         const Short_description = form.Short_description.value;
         const Rating = form.Rating.value;
 
-        const updatedProduct = { Image, Name, Brand_Name, Type, Price , Short_description, Rating }
+        const updatedProduct = { Image, Name, Brand_Name, Type, Price, Short_description, Rating, _id }
 
         console.log(updatedProduct);
 
-        fetch(`http://localhost:7000/products/${_id}`, {
+        fetch(`http://localhost:7000/getProduct/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
@@ -35,13 +35,13 @@ const UpdateProduct = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                if(data.insertedId){
+                if (data.modifiedCount > 0) {
                     Swal.fire({
                         title: 'success!',
                         text: 'Product Updated successfully',
                         icon: 'success',
                         confirmButtonText: 'Cool'
-                      })
+                    })
                 }
             })
             .catch(error => {
@@ -53,7 +53,7 @@ const UpdateProduct = () => {
         <div>
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content w-3/4 flex-col">
-                <h1 className="text-4xl font-bold font-custom p-5">Update your Product: {Name}</h1>
+                    <h1 className="text-4xl font-bold font-custom p-5">Update your Product: {Name}</h1>
 
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={handleUpdateProduct} className="card-body">
@@ -83,10 +83,22 @@ const UpdateProduct = () => {
                                 </label>
                                 <select name='Type' defaultValue={Type} className="select select-bordered w-full max-w-xs">
                                     <option disabled selected>Choose type</option>
-                                    <option>Phone</option>
-                                    <option>Computer</option>
-                                    <option>HeadPhone</option>
-                                    <option>Speaker</option>
+                                    <option value={Type}>{Type}</option>
+                                    <option value="Smartphone">Smartphone</option>
+                                    <option value="Laptop">Laptop</option>
+                                    <option value="Earbuds">Earbuds</option>
+                                    <option value="Tablet">Tablet</option>
+                                    <option value="Smartwatch">Smartwatch</option>
+                                    <option value="Desktop">Desktop</option>
+                                    <option value="Gaming Monitor">Gaming Monitor</option>
+                                    <option value="Smart TV">Smart TV</option>
+                                    <option value="Mirrorless Camera">Mirrorless Camera</option>
+                                    <option value="Headphones">Headphones</option>
+                                    <option value="Gaming Console">Gaming Console</option>
+                                    <option value="Wireless Earbuds">Wireless Earbuds</option>
+                                    <option value="Mini PC">Mini PC</option>
+                                    <option value="Solid State Drive">Solid State Drive</option>
+                                    <option value="Storage">Storage</option>
                                 </select>
 
                             </div>
