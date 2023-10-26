@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -10,8 +10,8 @@ const Login = () => {
 
 
     const { logIn } = useContext(AuthContext)
-    // const location = useLocation()
-    // const navigate = useNavigate()
+    const location = useLocation()
+    const navigate = useNavigate()
     console.log(location)
 
     const greetings = () => toast("Thanks for login...")
@@ -40,7 +40,7 @@ const Login = () => {
             console.log(result.user);
 
             { greetings() }
-            Navigate(location?.state ? location.state : '/')
+            navigate(location?.state ? location.state : '/')
 
         })
         .catch(error => {

@@ -10,6 +10,7 @@ import MyCart from "../pages/MyCart";
 import Single from "../pages/Single";
 import Product from "../pages/Product";
 import UpdateProduct from "../pages/UpdateProduct";
+import PrivateRoutes from "./PrivateRoutes";
 
 const routes = createBrowserRouter([
     {
@@ -24,11 +25,11 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/addProduct',
-                element: <AddProducts></AddProducts>
+                element: <PrivateRoutes><AddProducts></AddProducts></PrivateRoutes>
             },
             {
                 path: '/allProducts',
-                element: <AllProducts></AllProducts>,
+                element: <PrivateRoutes><AllProducts></AllProducts></PrivateRoutes>,
                 loader: () => fetch('http://localhost:7000/products')
             },
             {
@@ -41,25 +42,31 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/cart',
-                element: <MyCart></MyCart>
+                element: <PrivateRoutes><MyCart></MyCart></PrivateRoutes>,
+                loader: () => fetch(`http://localhost:7000/cart`)
             },
             {
                 path:'/product/:_id',
-                element:<Product></Product>,
+                element:<PrivateRoutes><Product></Product></PrivateRoutes>,
                 loader: ({ params }) => fetch(`http://localhost:7000/getProduct/${params._id}`)
             },
             {
                 path:'/updateProduct/:_id',
-                element:<UpdateProduct></UpdateProduct>,
+                element:<PrivateRoutes><UpdateProduct></UpdateProduct></PrivateRoutes>,
                 loader: ({ params }) => fetch(`http://localhost:7000/getProduct/${params._id}`)
 
+            },
+            {
+                path: "/products",
+                element: <PrivateRoutes><Single/></PrivateRoutes>
             }
+
         ]
     },
-    {
-        path: "/products",
-        element: <Single />
-    }
+    // {
+    //     path: "/products",
+    //     element: <Single />
+    // }
 ]);
 
 export default routes;
